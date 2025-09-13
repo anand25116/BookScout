@@ -1,4 +1,4 @@
-```markdown
+
 # BookScout 🔍📚
 
 **BookScout** is a full‑stack, AI‑powered book recommendation web app that uses semantic similarity, genre filtering, and automated metadata enrichment to suggest books you’ll love. Built with Flask, Pandas, BeautifulSoup, Hugging Face Transformers, and Chart.js, it features a dark‑mode UI and a scalable CSV‑backed cache.
@@ -34,14 +34,14 @@
 
 
 
-````
+
 ## ⚙️ Setup & Installation
 
 1. **Clone the repo**  
    ```bash
    git clone https://github.com/yourusername/bookscout.git
    cd bookscout
-````
+  ```
 
 2. **Create & activate virtual environment**
 
@@ -123,12 +123,5 @@ flask run
 
 ---
 
-## 👤 Author
 
-**Dev Salot**
-[GitHub](https://github.com/yourusername) • [Email](mailto:devsalot@gmail.com)
 
-Feel free to fork, star, and contribute!
-
-```
-```
