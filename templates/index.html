@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BookScout</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>📚 BookScout</h1>
+        <form method="post" class="search-form">
+            <label for="title">Enter a Book Title:</label>
+            <input type="text" id="title" name="title" required class="input-field">
+
+            <div class="genre-section">
+                <label for="genres">Filter by Genre (optional):</label>
+                <fieldset class="genre-fieldset">
+                    {% for genre in candidate_genres %}
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="genres" value="{{ genre }}"
+                                {% if genre in selected_genres %}checked{% endif %}>
+                            <span>{{ genre }}</span>
+                        </label><br>
+                    {% endfor %}
+                </fieldset>
+            </div>
+
+            <button type="submit" class="search-button">Search</button>
+        </form>
+
+        {% if book %}
+            <div class="book-card">
+                <h2>{{ book.title }}</h2>
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                <p><strong>Categories:</strong> {{ book.categories }}</p>
+                <p><strong>Rating:</strong> {{ book.rating }}</p>
+                <p><strong>Description:</strong> {{ book.clean_description }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

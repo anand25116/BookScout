@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Recommendations for {{ title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Books similar to "{{ title }}"</h1>
+
+        {% if genre_filter %}
+            <p><strong>Filtered by genres:</strong> {{ genre_filter | join(", ") }}</p>
+        {% endif %}
+
+        {% if recommendations %}
+            <div class="chart-container">
+                <canvas id="similarityChart"></canvas>
+            </div>
+
+            <div class="results">
+                {% for book in recommendations %}
+                    <div class="book-card">
+                        <strong>{{ book.title }}</strong> by {{ book.author }}<br>
+                        Category: {{ book.categories }}<br>
+                        Rating:
+                        {% if book.rating and book.rating|string|lower != 'nan' %}
+                            {{ "%.1f"|format(book.rating|float) }}
+                        {% else %}
+                            Unrated
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <script>
+            (function() {
+                const chartLabels = {{ recommendations
+                                          | map(attribute='title')
+                                          | list
+                                          | tojson
+                                          | safe }};
+                const chartRaw    = {{ recommendations
+                                          | map(attribute='similarity')
+                                          | list
+                                          | tojson
+                                          | safe }};
+
+                const chartData = chartRaw.map(x => +(x * 100).toFixed(2));
+
+                new Chart(document.getElementById('similarityChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: chartLabels,
+                        datasets: [{
+                            label: 'Similarity (%)',
+                            data: chartData,
+                            backgroundColor: 'rgba(255, 223, 102, 0.6)',
+                            borderColor: 'rgba(255, 223, 102, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#ffb347'
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: "Similarity (%)",
+                                    color: "#ffffff"
+                                },
+                                ticks: {
+                                    color: "#cccccc"
+                                },
+                                grid: {
+                                    color: "rgba(255, 255, 255, 0.1)"
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    color: "#cccccc"
+                                },
+                                grid: {
+                                    color: "rgba(255, 255, 255, 0.1)"
+                                }
+                            }
+                        }
+                    }
+                });
+            })();
+            </script>
+
+        {% elif genre_filter %}
+            <p class="no-results"><strong>No similar books found in the selected genres.</strong></p>
+        {% else %}
+            <p class="no-results">No similar books found.</p>
+        {% endif %}
+
+        <a href="/" class="back-link">Search another book</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+# ─── Python + Virtualenv ──────────────────────────────
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.log
+*.csv
+
+
+# ─── Environment Variables ────────────────────────────
+.env
+
+# ─── OS-Specific ──────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Flask Cache / Debug ──────────────────────────────
+instance/
+.cache/
+.cache/*
+
+# ─── Project Output Folders ───────────────────────────
+cache/
+data/
+analysis/
+structure.txt
+scraped_titles.txt
+normalized_genre_counts.csv
+genre_options.html
+
+# ─── Hugging Face Transformers ───────────────────────
+~/.cache/huggingface/
