@@ -41,7 +41,7 @@
    ```bash
    git clone https://github.com/yourusername/bookscout.git
    cd bookscout
-  ```
+   ```
 
 2. **Create & activate virtual environment**
 
